@@ -1,13 +1,12 @@
-import { forwardRef, ComponentProps } from "react";
-
-import styles from "./card.module.css";
+import { forwardRef, ComponentProps } from 'react';
+import styles from './card.module.css';
 
 export interface CardProps
-  extends Omit<ComponentProps<"div">, "className" | "children"> {
+  extends Omit<ComponentProps<'div'>, 'className' | 'children'> {
   title: string;
   description: string;
-  Icon: (props: ComponentProps<"svg">) => JSX.Element;
-  href: string;
+  Icon: (props: ComponentProps<'svg'>) => JSX.Element;
+  href?: string;
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -22,16 +21,18 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         <div className={styles.content}>
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.description}>{description}</p>
-          <div className={styles.callToActionContainer}>
-            <a
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.callToActionElement}
-            >
-              Visit documentation →
-            </a>
-          </div>
+          {href && (
+            <div className={styles.callToActionContainer}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.callToActionElement}
+              >
+                Read More →
+              </a>
+            </div>
+          )}
         </div>
       </div>
     );
