@@ -6,3 +6,7 @@ node_modules/
 # Files
 .env
 .DS_Store
+
+client/node_modules
+client/.idea
+client/dist
