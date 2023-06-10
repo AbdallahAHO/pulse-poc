@@ -1,15 +1,18 @@
-# Build stage
-FROM node:14 AS build
-WORKDIR /app
-COPY package*.json yarn.lock ./
-RUN yarn install
-COPY . .
-RUN yarn build
-
-# Production stage
+# Use the official Node.js 14 Alpine image as the base
 FROM node:14-alpine
+
+# Set the working directory
 WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
-RUN yarn install
+
+# Copy the package.json and yarn.lock files to the working directory
+COPY package*.json yarn.lock ./
+
+# Install dependencies and husky globally
+RUN yarn global add husky@7.0.4 && \
+    yarn install --silent --no-progress --frozen-lockfile
+
+# Copy the rest of the project files to the working directory
+COPY . .
+
+# Build and run the application
 CMD [ "yarn", "serve" ]
