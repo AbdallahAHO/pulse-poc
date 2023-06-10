@@ -1,0 +1,22 @@
+const express = require('express');
+const issuesRouter = require('./routes/issues');
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Routes
+app.use('/api', issuesRouter);
+
+// Error handler middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
