@@ -11,5 +11,5 @@ FROM node:14-alpine
 WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY package*.json ./
-RUN yarn install --production
+RUN yarn install
 CMD [ "yarn", "serve" ]
